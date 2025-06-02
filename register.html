@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
+    <title>पबन गल्ला पसल</title>
+    
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image/png" href="assets/img/logo.png">
+    <!-- google font -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="assets/css/all.min.css">
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <!-- owl carousel -->
+    <link rel="stylesheet" href="assets/css/owl.carousel.css">
+    <!-- magnific popup -->
+    <link rel="stylesheet" href="assets/css/magnific-popup.css">
+    <!-- animate css -->
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <!-- mean menu css -->
+    <link rel="stylesheet" href="assets/css/meanmenu.min.css">
+    <!-- main style -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <!-- responsive -->
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <!-- header styles -->
+    <link rel="stylesheet" href="assets/css/header.css">
+    
+    <style>
+        .register-section {
+            padding: 100px 0;
+            background-color: #f5f5f5;
+        }
+        .register-form {
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .register-form h2 {
+            color: #051922;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-control {
+            height: 50px;
+            border-radius: 5px;
+        }
+        .register-btn {
+            background: #F28123;
+            color: #fff;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+        .register-btn:hover {
+            background: #051922;
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .login-link a {
+            color: #F28123;
+            text-decoration: none;
+        }
+        .login-link a:hover {
+            color: #051922;
+        }
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            padding: 0;
+            z-index: 10;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s;
+        }
+        .password-toggle:hover {
+            color: #F28123;
+        }
+        .password-field {
+            position: relative;
+        }
+        .password-field .form-control {
+            padding-right: 40px;
+        }
+        .profile-picture-upload {
+            text-align: center;
+            padding: 20px;
+            border: 2px dashed #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .profile-picture-upload:hover {
+            border-color: #F28123;
+        }
+        .upload-placeholder {
+            color: #666;
+        }
+        .upload-placeholder i {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #F28123;
+        }
+        .upload-placeholder span {
+            display: block;
+            margin-top: 5px;
+        }
+        .profile-picture-label {
+            cursor: pointer;
+            display: block;
+        }
+        .success-message {
+            display: none;
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
+
+    <!-- header script -->
+    <script src="assets/js/header.js"></script>
+</head>
+<body>
+    <!--PreLoader-->
+    <div class="loader">
+        <div class="loader-inner">
+            <div class="circle"></div>
+        </div>
+    </div>
+    <!--PreLoader Ends-->
+    
+    <!-- header -->
+    <div class="top-header-area" id="sticker">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 text-center">
+                    <div class="main-menu-wrap">
+                        <!-- logo -->
+                        <div class="site-logo">
+                            <a href="index.html">
+                                <img src="assets/img/favicon.png" alt="">
+                            </a>
+                        </div>
+                        <!-- logo -->
+
+                        <!-- menu start -->
+                        <nav class="main-menu">
+                            <ul>
+                                <li><a href="index.html">गृहपृष्ठ</a></li>
+                                <li><a href="about.html">हाम्रो बारेमा</a></li>
+                                <li><a href="#">पृष्ठहरू</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end header -->
+
+    <!-- register section -->
+    <div class="register-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="register-form">
+                        <h2>दर्ता गर्नुहोस्</h2>
+                        <div id="successMessage" class="success-message"></div>
+                        <form id="registerForm" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="fullname" placeholder="पूरा नाम" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" id="email" placeholder="इमेल" required>
+                            </div>
+                            <div class="form-group">
+                                <div class="profile-picture-upload">
+                                    <label for="profilePicture" class="profile-picture-label">
+                                        <div class="upload-placeholder">
+                                            <i class="fas fa-camera"></i>
+                                            <span>प्रोफाइल तस्विर अपलोड गर्नुहोस्</span>
+                                        </div>
+                                        <img id="previewImage" style="display: none; max-width: 100%; max-height: 200px; margin-top: 10px; border-radius: 5px;">
+                                    </label>
+                                    <input type="file" id="profilePicture" accept="image/*" style="display: none;" onchange="previewProfilePicture(this)">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="password-field">
+                                    <input type="password" class="form-control" id="password" placeholder="पासवर्ड" required>
+                                    <button type="button" class="password-toggle" onclick="togglePassword('password')" title="पासवर्ड देखाउनुहोस्/लुकाउनुहोस्">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="password-field">
+                                    <input type="password" class="form-control" id="confirmPassword" placeholder="पासवर्ड पुष्टि गर्नुहोस्" required>
+                                    <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')" title="पासवर्ड देखाउनुहोस्/लुकाउनुहोस्">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="submit" class="register-btn">दर्ता गर्नुहोस्</button>
+                        </form>
+                        <div class="login-link">
+                            <p>पहिले नै खाता छ? <a href="login.html">लग इन गर्नुहोस्</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end register section -->
+
+    <!-- jquery -->
+    <script src="assets/js/jquery-1.11.3.min.js"></script>
+    <!-- bootstrap -->
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <!-- main js -->
+    <script src="assets/js/main.js"></script>
+
+    <script>
+        // Function to preview profile picture
+        function previewProfilePicture(input) {
+            const preview = document.getElementById('previewImage');
+            const placeholder = document.querySelector('.upload-placeholder');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    placeholder.style.display = 'none';
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Function to toggle password visibility
+        function togglePassword(inputId) {
+            const passwordInput = document.getElementById(inputId);
+            const icon = passwordInput.nextElementSibling.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+                icon.parentElement.title = 'पासवर्ड लुकाउनुहोस्';
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+                icon.parentElement.title = 'पासवर्ड देखाउनुहोस्';
+            }
+        }
+
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const fullname = document.getElementById('fullname').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const profilePicture = document.getElementById('profilePicture').files[0];
+            
+            // Basic validation
+            if (!fullname || !email || !password || !confirmPassword) {
+                alert('कृपया सबै फिल्डहरू भर्नुहोस्');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('पासवर्ड मिलेन');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('full_name', fullname);
+            formData.append('email', email);
+            formData.append('password', password);
+            formData.append('confirm_password', confirmPassword);
+            if (profilePicture) {
+                formData.append('profile_picture', profilePicture);
+            }
+
+            try {
+                const response = await fetch('register_process.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Show success message
+                    const successMessage = document.getElementById('successMessage');
+                    successMessage.textContent = data.message;
+                    successMessage.style.display = 'block';
+                    
+                    // Hide the form
+                    document.getElementById('registerForm').style.display = 'none';
+                    
+                    // Redirect to login page after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 2000);
+                } else {
+                    alert(data.errors.join('\n'));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('एक त्रुटि भयो। कृपया पुन: प्रयास गर्नुहोस्।');
+            }
+        });
+    </script>
+</body>
+</html>

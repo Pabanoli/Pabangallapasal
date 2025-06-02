@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
+
+	<!-- title -->
+	<title>पबन गल्ला पसल</title>
+
+	<!-- favicon -->
+	<link rel="shortcut icon" type="image/png" href="assets/img/logo.png">
+	<!-- google font -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+	<!-- fontawesome -->
+	<link rel="stylesheet" href="assets/css/all.min.css">
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+	<!-- owl carousel -->
+	<link rel="stylesheet" href="assets/css/owl.carousel.css">
+	<!-- magnific popup -->
+	<link rel="stylesheet" href="assets/css/magnific-popup.css">
+	<!-- animate css -->
+	<link rel="stylesheet" href="assets/css/animate.css">
+	<!-- mean menu css -->
+	<link rel="stylesheet" href="assets/css/meanmenu.min.css">
+	<!-- main style -->
+	<link rel="stylesheet" href="assets/css/main.css">
+	<!-- responsive -->
+	<link rel="stylesheet" href="assets/css/responsive.css">
+	<!-- header styles -->
+	<link rel="stylesheet" href="assets/css/header.css">
+
+	<!-- header script -->
+	<script src="assets/js/header.js"></script>
+</head>
+<body>
+	
+	<!--PreLoader-->
+    <div class="loader">
+        <div class="loader-inner">
+            <div class="circle"></div>
+        </div>
+    </div>
+    <!--PreLoader Ends-->
+	
+	<!-- header -->
+	<div class="top-header-area" id="sticker">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-sm-12 text-center">
+					<div class="main-menu-wrap">
+						<!-- logo -->
+						<div class="site-logo">
+							<a href="index.html">
+								<img src="assets/img/favicon.png" alt="">
+							</a>
+						</div>
+						<!-- logo -->
+
+						<!-- menu start -->
+						<nav class="main-menu">
+							<ul>
+								<li><a href="index.html">गृहपृष्ठ</a></li>
+								<li><a href="about.html">हाम्रो बारेमा</a></li>
+								<li><a href="#">पृष्ठहरू</a>
+									<ul class="sub-menu">
+										<li><a href="contact.html">सम्पर्क</a></li>
+										<li><a href="news.html">समाचार</a></li>
+										<li><a href="shop.html">पसल</a></li>
+									</ul>
+								</li>
+								<li class="current-list-item"><a href="news.html">समाचार</a></li>
+								<li><a href="contact.html">सम्पर्क</a></li>
+								<li><a href="shop.html">पसल</a>
+									<ul class="sub-menu">
+										<li><a href="shop.html">पसल</a></li>
+									</ul>
+								</li>
+								<li>
+									<div class="header-icons" style="position: relative; display: flex; align-items: center; gap: 10px;">
+										<a class="search-bar-icon" href="#" style="color: #fff; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; transition: 0.3s;"><i class="fas fa-search"></i></a>
+										<a class="shopping-cart" href="cart.html" style="color: #fff; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; transition: 0.3s;"><i class="fas fa-shopping-cart"></i></a>
+										<a class="user-icon" href="#" style="color: #fff; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; position: relative; cursor: pointer; transition: 0.3s; background-color: rgba(255, 255, 255, 0.1); padding: 0; box-sizing: border-box;">
+											<img id="userProfilePic" src="assets/img/default-profile.png" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: all 0.3s ease; display: none;">
+											<i class="fas fa-user" id="userIcon" style="font-size: 20px; color: #fff; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; line-height: 1;"></i>
+										</a>
+										<div class="user-dropdown" style="position: absolute; top: 100%; right: 0; background-color: #fff; min-width: 280px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); border-radius: 16px; padding: 20px; margin-top: 15px; display: none; z-index: 1000; animation: slideDown 0.3s ease; border: 1px solid rgba(0,0,0,0.08); overflow-y: auto; max-height: calc(100vh - 100px);">
+											<div id="userInfo" style="text-align: center; padding: 15px; border-bottom: 1px solid rgba(0,0,0,0.08); margin-bottom: 15px; background: linear-gradient(to bottom, #f8f9fa, #fff); border-radius: 12px; display: none;">
+												<div style="text-align: center;">
+													<img id="dropdownProfilePic" src="" alt="Profile" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #F28123; padding: 2px; margin: 0 auto 10px auto; display: block; box-shadow: 0 4px 8px rgba(242, 129, 35, 0.2); background-color: #fff;">
+													<h5 id="userName" style="margin: 0; color: #051922; font-size: 18px; font-weight: 600; margin-bottom: 4px; text-shadow: 0 1px 1px rgba(0,0,0,0.05);"></h5>
+													<p id="userEmail" style="margin: 0; color: #666; font-size: 13px; padding: 3px 10px; background: rgba(0,0,0,0.04); border-radius: 12px; display: inline-block;"></p>
+												</div>
+												<div class="profile-actions" style="margin-top: 15px;">
+													<button id="editProfileBtn" class="edit-profile-btn" style="background: #F28123; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 14px; transition: all 0.3s ease;">
+														<i class="fas fa-edit"></i> प्रोफाइल सम्पादन
+													</button>
+												</div>
+											</div>
+											<a href="login.html" id="loginLink" style="color: #051922; padding: 14px 20px; display: flex; align-items: center; text-decoration: none; border-radius: 12px; transition: all 0.3s ease; margin: 8px 0; font-weight: 500; background: #f8f9fa; box-sizing: border-box; width: 100%;">
+												<i class="fas fa-sign-in-alt" style="margin-right: 12px; font-size: 18px; text-align: center; color: #F28123; transition: all 0.3s ease; flex-shrink: 0;"></i> लग इन
+											</a>
+											<a href="register.html" id="registerLink" style="color: #051922; padding: 14px 20px; display: flex; align-items: center; text-decoration: none; border-radius: 12px; transition: all 0.3s ease; margin: 8px 0; font-weight: 500; background: #f8f9fa; box-sizing: border-box; width: 100%;">
+												<i class="fas fa-user-plus" style="margin-right: 12px; font-size: 18px; text-align: center; color: #F28123; transition: all 0.3s ease; flex-shrink: 0;"></i> दर्ता गर्नुहोस्
+											</a>
+											<a href="#" id="updateProfileLink" style="color: #051922; padding: 14px 20px; display: none; align-items: center; text-decoration: none; border-radius: 12px; transition: all 0.3s ease; margin: 8px 0; font-weight: 500; background: #f8f9fa; box-sizing: border-box; width: 100%;">
+												<i class="fas fa-user-edit" style="margin-right: 12px; font-size: 18px; text-align: center; color: #F28123; transition: all 0.3s ease; flex-shrink: 0;"></i> प्रोफाइल अपडेट
+											</a>
+											<a href="#" id="logoutLink" style="color: #051922; padding: 14px 20px; display: none; align-items: center; text-decoration: none; border-radius: 12px; transition: all 0.3s ease; margin: 8px 0; font-weight: 500; background: #f8f9fa; box-sizing: border-box; width: 100%;">
+												<i class="fas fa-sign-out-alt" style="margin-right: 12px; font-size: 18px; text-align: center; color: #F28123; transition: all 0.3s ease; flex-shrink: 0;"></i> लग आउट
+											</a>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</nav>
+						<a class="mobile-show user-icon" href="#" style="color: #fff; display: none; position: absolute; right: 60px; top: 22px; z-index: 999;"><i class="fas fa-user"></i></a>
+						<div class="mobile-menu"></div>
+						<!-- menu end -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end header -->
+
+	<!-- search area -->
+	<div class="search-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<span class="close-btn"><i class="fas fa-window-close"></i></span>
+					<div class="search-bar">
+						<div class="search-bar-tablecell">
+							<h3>Search For:</h3>
+							<input type="text" placeholder="Keywords">
+							<button type="submit">Search <i class="fas fa-search"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end search arewa -->
+	
+	<!-- breadcrumb-section -->
+	<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="breadcrumb-text">
+						<p>अर्गानिक जानकारी</p>
+						<h1>समाचार</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end breadcrumb section -->
+
+	<!-- latest news -->
+	<div class="latest-news mt-150 mb-150">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4 col-md-6">
+					<div class="single-latest-news">
+						<a href="single-news.html"><div class="latest-news-bg news-bg-1"></div></a>
+						<div class="news-text-box">
+							<h3><a href="single-news.html">ताजा आलु अब पवन गल्ला पसलमा उपलब्ध!</a></h3>
+							<p class="blog-meta">
+								<span class="author"><i class="fas fa-user"></i> Admin</span>
+								<span class="date"><i class="fas fa-calendar"></i> 15 March, 2025</span>
+							</p>
+							<p class="excerpt"> पवन गल्ला पसलमा ताजा र सफा आलुको नयाँ स्टक आइपुगेको छ।
+सीधै किसानबाट ल्याइएको, गुणस्तरीय आलु अब सस्तो मूल्यमा तपाईंको नजिकैको पसलमा उपलब्ध छ।</p>
+							<a href="single-news.html" class=""><i class=""></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="single-latest-news">
+						<a href="single-news.html"><div class="latest-news-bg news-bg-2"></div></a>
+						<div class="news-text-box">
+							<h3><a href="single-news.html">ताजा अदुवा अब पवन गल्ला पसलमा!</a></h3>
+							<p class="blog-meta">
+								<span class="author"><i class="fas fa-user"></i> Admin</span>
+								<span class="date"><i class="fas fa-calendar"></i> 27 April, 2025</span>
+							</p>
+							<p class="excerpt">  पवन गल्ला पसलमा ताजा र घरेलु अदुवा उपलब्ध छ।
+भान्साको स्वाद बढाउने मात्र होइन, स्वास्थ्यका लागि फाइदाजनक हुने अदुवा अब हाम्रो पसलमा उचित मूल्यमा पाइन्छ।</p>
+							<a <a href="single-news.html" class=""><i class=""></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="single-latest-news">
+						<a href="single-news.html"><div class="latest-news-bg news-bg-3"></div></a>
+						<div class="news-text-box">
+							<h3><a href="single-news.html"> खुशबुदार टिमुर अब पवन गल्ला पसलमा!</a></h3>
+							<p class="blog-meta">
+								<span class="author"><i class="fas fa-user"></i> Admin</span>
+								<span class="date"><i class="fas fa-calendar"></i> 12 May, 2025</span>
+							</p>
+							<p class="excerpt">पवन गल्ला पसलमा ताजा र गुणस्तरीय टिमुर उपलब्ध भएको छ।
+नेपाली परिकारमा अनौठो स्वाद र सुगन्ध थप्ने टिमुर स्वास्थ्यका लागि पनि लाभदायक हुन्छ।</p>
+							<a href="single-news.html" class=""><i class=""></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="single-latest-news">
+						<a href="single-news.html"><div class="latest-news-bg news-bg-4"></div></a>
+						<div class="news-text-box">
+							<h3><a href="single-news.html">Fall in love with the fresh orange</a></h3>
+							<p class="blog-meta">
+								<span class="author"><i class="fas fa-user"></i> Admin</span>
+								<span class="date"><i class="fas fa-calendar"></i> 27 December, 2019</span>
+							</p>
+							<p class="excerpt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus laborum autem, dolores inventore, beatae nam.</p>
+							<a href="single-news.html" class=""><i class=""></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="single-latest-news">
+						<a href="single-news.html"><div class="latest-news-bg news-bg-5"></div></a>
+						<div class="news-text-box">
+							<h3><a href="single-news.html">Why the berries always look delecious</a></h3>
+							<p class="blog-meta">
+								<span class="author"><i class="fas fa-user"></i> Admin</span>
+								<span class="date"><i class="fas fa-calendar"></i> 27 December, 2019</span>
+							</p>
+							<p class="excerpt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus laborum autem, dolores inventore, beatae nam.</p>
+							<a href="single-news.html" class="read-more-btn">read more <i class="fas fa-angle-right"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="single-latest-news">
+						<a href="single-news.html"><div class="latest-news-bg news-bg-6"></div></a>
+						<div class="news-text-box">
+							<h3><a href="single-news.html">Love for fruits are genuine of John Doe</a></h3>
+							<p class="blog-meta">
+								<span class="author"><i class="fas fa-user"></i> Admin</span>
+								<span class="date"><i class="fas fa-calendar"></i> 27 December, 2018</span>
+							</p>
+							<p class="excerpt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus laborum autem, dolores inventore, beatae nam.</p>
+							<a href="single-news.html" class="read-more-btn">read more <i class="fas fa-angle-right"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12 text-center">
+							<div class="pagination-wrap">
+								<ul>
+									<li><a href="#">Prev</a></li>
+									<li><a href="#">1</a></li>
+									<li><a class="active" href="#">2</a></li>
+									<li><a href="#">3</a></li>
+									<li><a href="#">Next</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end latest news -->
+
+	<!-- footer -->
+	<div class="footer-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box about-widget">
+						<h2 class="widget-title">पवन गल्ला पसल</h2>
+						<p> पवन गल्ला पसल स्थानीय ग्राहकहरूको आवश्यकता पूरा गर्न स्थापना गरिएको एक भरपर्दो र गुणस्तरीय पसल हो।
+                             हामी गुणस्तरीय गल्ला सामग्री उचित मूल्यमा उपलब्ध गराउँदछौं।
+                            </p>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box get-in-touch">
+						<h2 class="widget-title">सम्पर्क जानकारी</h2>
+						<ul>
+							<li>बागचोर नगरपालिका १२ बाफुखोला,सल्यान </li>
+							<li>pabangallapasal@gmail.com</li>
+							<li>+977 9822921377</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box ">
+						<h2 class="widget-title"> द्रुत लिङ्कहरु</h2>
+						<ul>
+							<li><a href="index.html">गृहपृष्ठ</a></li>
+							<li><a href="about.html">हाम्रो बारेमा</a></li>
+							<li><a href="services.html">पृष्ठहरू</a></li>
+							<li><a href="news.html">समाचार</a></li>
+							<li><a href="contact.html">सम्पर्क</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box subscribe">
+						<h2 class="widget-title">सदस्यता लिनुहोस्</h2>
+						<p>नवीनतम अपडेटहरू प्राप्त गर्न हाम्रो मेलिङ सूचीको सदस्यता लिनुहोस्।</p>
+						<form action="index.html">
+							<input type="email" placeholder="Email">
+							<button type="submit"><i class="fas fa-paper-plane"></i></button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end footer -->
+	
+	<!-- copyright -->
+	<div class="copyright">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 col-md-12">
+					<p> &copy; 2025  <a href="https://pabanoli.com.np">पवन गल्ला पसल</a>,  All Rights Reserved. 
+						Distributed By  <a href="https://pabanoli.com.np/">PaBaN</a>
+					</p>
+				</div>
+				<div class="col-lg-6 text-right col-md-12">
+					<div class="social-icons">
+						<ul>
+							<li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+							<li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
+							<li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+							<li><a href="#" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+							<li><a href="#" target="_blank"><i class="fab fa-dribbble"></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end copyright -->
+	
+	<!-- jquery -->
+	<script src="assets/js/jquery-1.11.3.min.js"></script>
+	<!-- bootstrap -->
+	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+	<!-- count down -->
+	<script src="assets/js/jquery.countdown.js"></script>
+	<!-- isotope -->
+	<script src="assets/js/jquery.isotope-3.0.6.min.js"></script>
+	<!-- waypoints -->
+	<script src="assets/js/waypoints.js"></script>
+	<!-- owl carousel -->
+	<script src="assets/js/owl.carousel.min.js"></script>
+	<!-- magnific popup -->
+	<script src="assets/js/jquery.magnific-popup.min.js"></script>
+	<!-- mean menu -->
+	<script src="assets/js/jquery.meanmenu.min.js"></script>
+	<!-- sticker js -->
+	<script src="assets/js/sticker.js"></script>
+	<!-- main js -->
+	<script src="assets/js/main.js"></script>
+
+</body>
+</html>

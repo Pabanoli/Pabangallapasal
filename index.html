@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
+
+	<!-- title -->
+	<title>पवन गल्ला पसल</title>
+
+	<!-- favicon -->
+	<link rel="shortcut icon" type="image/png" href="assets/img/logo.png">
+	<!-- google font -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+	<!-- fontawesome -->
+	<link rel="stylesheet" href="assets/css/all.min.css">
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+	<!-- owl carousel -->
+	<link rel="stylesheet" href="assets/css/owl.carousel.css">
+	<!-- magnific popup -->
+	<link rel="stylesheet" href="assets/css/magnific-popup.css">
+	<!-- animate css -->
+	<link rel="stylesheet" href="assets/css/animate.css">
+	<!-- mean menu css -->
+	<link rel="stylesheet" href="assets/css/meanmenu.min.css">
+	<!-- main style -->
+	<link rel="stylesheet" href="assets/css/main.css">
+	<!-- responsive -->
+	<link rel="stylesheet" href="assets/css/responsive.css">
+
+	<script>
+		// Check login status and update UI
+		document.addEventListener('DOMContentLoaded', function() {
+			const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+			const userProfilePic = document.getElementById('userProfilePic');
+			const userIcon = document.getElementById('userIcon');
+			const userInfo = document.getElementById('userInfo');
+			const loginLink = document.getElementById('loginLink');
+			const registerLink = document.getElementById('registerLink');
+			const logoutLink = document.getElementById('logoutLink');
+			const updateProfileLink = document.getElementById('updateProfileLink');
+			const dropdownProfilePic = document.getElementById('dropdownProfilePic');
+			const userName = document.getElementById('userName');
+			const userEmail = document.getElementById('userEmail');
+			const userDropdown = document.querySelector('.user-dropdown');
+			const userIconLink = document.querySelector('.user-icon');
+			const editProfileBtn = document.getElementById('editProfileBtn');
+
+			// Toggle dropdown on click
+			userIconLink.addEventListener('click', function(e) {
+				e.preventDefault();
+				userDropdown.style.display = userDropdown.style.display === 'block' ? 'none' : 'block';
+			});
+
+			// Close dropdown when clicking outside
+			document.addEventListener('click', function(e) {
+				if (!userIconLink.contains(e.target) && !userDropdown.contains(e.target)) {
+					userDropdown.style.display = 'none';
+				}
+			});
+
+			// Handle profile edit button click
+			editProfileBtn.addEventListener('click', function(e) {
+				e.preventDefault();
+				e.stopPropagation(); // Prevent dropdown from closing
+				showProfileUpdateModal();
+			});
+
+			function showProfileUpdateModal() {
+				// Remove any existing modal
+				const existingModal = document.querySelector('.profile-update-modal');
+				if (existingModal) {
+					existingModal.remove();
+				}
+
+				const modal = document.createElement('div');
+				modal.className = 'profile-update-modal';
+				modal.style.display = 'flex';
+				modal.innerHTML = `
+					<div class="modal-content">
+						<span class="close-modal">&times;</span>
+						<h2>प्रोफाइल अपडेट</h2>
+						<form id="profileUpdateForm">
+							<div class="form-group">
+								<label for="updateName">नाम</label>
+								<input type="text" id="updateName" name="name" value="${localStorage.getItem('userName') || ''}" required>
+							</div>
+							<div class="form-group">
+								<label for="updateEmail">इमेल</label>
+								<input type="email" id="updateEmail" name="email" value="${localStorage.getItem('userEmail') || ''}" required>
+							</div>
+							<div class="form-group">
+								<label for="updateProfilePicture">प्रोफाइल तस्विर</label>
+								<input type="file" id="updateProfilePicture" name="profile_picture" accept="image/*">
+								<div id="previewContainer" style="margin-top: 10px; text-align: center; display: none;">
+									<img id="imagePreview" style="max-width: 150px; max-height: 150px; border-radius: 50%; border: 2px solid #F28123;">
+								</div>
+							</div>
+							<button type="submit" class="update-btn">अपडेट गर्नुहोस्</button>
+						</form>
+					</div>
+				`;
+				document.body.appendChild(modal);
+
+				// Add image preview functionality
+				const profilePictureInput = document.getElementById('updateProfilePicture');
+				const previewContainer = document.getElementById('previewContainer');
+				const imagePreview = document.getElementById('imagePreview');
+
+				profilePictureInput.addEventListener('change', function(e) {
+					const file = e.target.files[0];
+					if (file) {
+						const reader = new FileReader();
+						reader.onload = function(e) {
+							imagePreview.src = e.target.result;
+							previewContainer.style.display = 'block';
+						}
+						reader.readAsDataURL(file);
+					}
+				});
+
+				// Close modal functionality
+				const closeBtn = modal.querySelector('.close-modal');
+				closeBtn.onclick = function() {
+					modal.remove();
+				}
+
+				// Close modal when clicking outside
+				modal.onclick = function(event) {
+					if (event.target === modal) {
+						modal.remove();
+					}
+				}
+
+				// Handle form submission
+				const form = modal.querySelector('#profileUpdateForm');
+				form.addEventListener('submit', function(e) {
+					e.preventDefault();
+					
+					const formData = new FormData();
+					formData.append('name', document.getElementById('updateName').value);
+					formData.append('email', document.getElementById('updateEmail').value);
+					
+					const profilePicture = document.getElementById('updateProfilePicture').files[0];
+					if (profilePicture) {
+						formData.append('profile_picture', profilePicture);
+					}
+					
+					fetch('process/update_profile.php', {
+						method: 'POST',
+						body: formData,
+						credentials: 'same-origin' // This ensures cookies are sent with the request
+					})
+					.then(response => {
+						if (!response.ok) {
+							throw new Error('Network response was not ok');
+						}
+						return response.json();
+					})
+					.then(data => {
+						if (data.success) {
+							alert(data.message);
+							
+							// Update UI with new information
+							const userInfo = document.querySelector('.user-info');
+							if (userInfo) {
+								const nameElement = userInfo.querySelector('h3');
+								const emailElement = userInfo.querySelector('p');
+								if (nameElement) nameElement.textContent = formData.get('name');
+								if (emailElement) emailElement.textContent = formData.get('email');
+							}
+							
+							// Update profile picture if changed
+							if (data.profile_picture) {
+								const userProfilePic = document.getElementById('userProfilePic');
+								const dropdownProfilePic = document.getElementById('dropdownProfilePic');
+								if (userProfilePic) userProfilePic.src = data.profile_picture;
+								if (dropdownProfilePic) dropdownProfilePic.src = data.profile_picture;
+							}
+							
+							// Close the modal
+							modal.remove();
+							
+							// Reload the page to ensure all session data is in sync
+							window.location.reload();
+						} else {
+							alert(data.message || 'प्रोफाइल अपडेट गर्दा त्रुटि भयो। कृपया पुन: प्रयास गर्नुहोस्।');
+						}
+					})
+					.catch(error => {
+						console.error('Error:', error);
+						alert('प्रोफाइल अपडेट गर्दा त्रुटि भयो। कृपया पुन: प्रयास गर्नुहोस्।');
+					});
+				});
+			}
+
+			if (isLoggedIn) {
+				// Show profile picture and hide user icon
+				userProfilePic.style.display = 'block';
+				userIcon.style.display = 'none';
+				
+				// Apply circular styling to the container
+				userIconLink.style.width = '40px';
+				userIconLink.style.height = '40px';
+				userIconLink.style.borderRadius = '50%';
+				userIconLink.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+				userIconLink.style.padding = '0';
+				userIconLink.style.display = 'inline-flex';
+
+				// Set profile picture
+				const profilePic = localStorage.getItem('userProfilePicture') || 'assets/img/default-profile.png';
+				userProfilePic.src = profilePic;
+				dropdownProfilePic.src = profilePic;
+				
+				// Set user info
+				userName.textContent = localStorage.getItem('userName') || '';
+				userEmail.textContent = localStorage.getItem('userEmail') || '';
+				
+				// Show/hide appropriate links
+				userInfo.style.display = 'block';
+				loginLink.style.display = 'none';
+				registerLink.style.display = 'none';
+				logoutLink.style.display = 'block';
+				updateProfileLink.style.display = 'none';
+			} else {
+				// Show user icon and hide profile picture
+				userProfilePic.style.display = 'none';
+				userIcon.style.display = 'inline-block';
+				
+				// Set container dimensions and alignment
+				userIconLink.style.width = '40px';
+				userIconLink.style.height = '40px';
+				userIconLink.style.borderRadius = '50%';
+				userIconLink.style.backgroundColor = 'transparent';
+				userIconLink.style.padding = '0';
+				userIconLink.style.display = 'inline-flex';
+				userIconLink.style.alignItems = 'center';
+				userIconLink.style.justifyContent = 'center';
+				userIconLink.style.verticalAlign = 'middle';
+				userIconLink.style.boxSizing = 'border-box';
+
+				// Set font size for the icon
+				userIcon.style.fontSize = '20px';
+				userIcon.style.color = '#fff';
+				userIcon.style.margin = '0';
+				userIcon.style.verticalAlign = 'middle';
+				userIcon.style.lineHeight = '1';
+				userIcon.style.display = 'flex';
+				userIcon.style.alignItems = 'center';
+				userIcon.style.justifyContent = 'center';
+				userIcon.style.width = '100%';
+				userIcon.style.height = '100%';
+
+				// Show/hide appropriate links
+				userInfo.style.display = 'none';
+				loginLink.style.display = 'block';
+				registerLink.style.display = 'block';
+				logoutLink.style.display = 'none';
+				updateProfileLink.style.display = 'none';
+			}
+
+			// Handle logout
+			logoutLink.addEventListener('click', function(e) {
+				e.preventDefault();
+				localStorage.removeItem('isLoggedIn');
+				localStorage.removeItem('userEmail');
+				localStorage.removeItem('userName');
+				localStorage.removeItem('userProfilePicture');
+				window.location.reload();
+			});
+		});
+	</script>
+
+</head>
+<body>
+	
+	<!--PreLoader-->
+    <div class="loader">
+        <div class="loader-inner">
+            <div class="circle"></div>
+        </div>
+    </div>
+    <!--PreLoader Ends-->
+	
+	<!-- header -->
+	<div class="top-header-area" id="sticker">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-sm-12 text-center">
+					<div class="main-menu-wrap">
+						<!-- logo -->
+						<div class="site-logo">
+							<a href="index.html">
+								<img src="assets/img/favicon.png" alt="">
+							</a>
+						</div>
+						<!-- logo -->
+
+						<!-- menu start -->
+						<nav class="main-menu">
+							<ul>
+								<li class="current-list-item"><a href="#">गृहपृष्ठ</a>
+								</li>
+								<li><a href="about.html">हाम्रो बारेमा</a></li>
+								<li><a href="#">पृष्ठहरू</a>
+									<ul class="sub-menu">
+										<li><a href="contact.html">सम्पर्क</a></li>
+										<li><a href="news.html">समाचार</a></li>
+										<li><a href="shop.html">पसल</a></li>
+									</ul>
+								</li>
+								<li><a href="news.html">समाचार</a>
+						
+								</li>
+								<li><a href="contact.html">सम्पर्क</a></li>
+								<li><a href="shop.html">पसल</a>
+									<ul class="sub-menu">
+										<li><a href="shop.html"> पसल</a></li>
+									</ul>
+								</li>
+								<li>
+									<div class="header-icons" style="position: relative; display: flex; align-items: center; gap: 10px;">
+										<a class="search-bar-icon" href="#" style="color: #fff; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; transition: 0.3s;"><i class="fas fa-search"></i></a>
+										<a class="shopping-cart" href="cart.html" style="color: #fff; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; transition: 0.3s;"><i class="fas fa-shopping-cart"></i></a>
+										<a class="user-icon" href="#" style="color: #fff; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; overflow: hidden; position: relative; cursor: pointer; transition: 0.3s; background-color: rgba(255, 255, 255, 0.1); padding: 0; box-sizing: border-box;">
+											<img id="userProfilePic" src="assets/img/default-profile.png" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.2); transition: all 0.3s ease; display: none;">
+											<i class="fas fa-user" id="userIcon" style="font-size: 20px; color: #fff; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; line-height: 1;"></i>
+										</a>
+										<div class="user-dropdown" style="position: absolute; top: 100%; right: 0; background-color: #fff; min-width: 280px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); border-radius: 16px; padding: 20px; margin-top: 15px; display: none; z-index: 1000; animation: slideDown 0.3s ease; border: 1px solid rgba(0,0,0,0.08); overflow-y: auto; max-height: calc(100vh - 100px);">
+											<div id="userInfo" style="text-align: center; padding: 15px; border-bottom: 1px solid rgba(0,0,0,0.08); margin-bottom: 15px; background: linear-gradient(to bottom, #f8f9fa, #fff); border-radius: 12px; display: none;">
+												<div style="text-align: center;">
+													<img id="dropdownProfilePic" src="" alt="Profile" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid #F28123; padding: 2px; margin: 0 auto 10px auto; display: block; box-shadow: 0 4px 8px rgba(242, 129, 35, 0.2); background-color: #fff;">
+													<h5 id="userName" style="margin: 0; color: #051922; font-size: 18px; font-weight: 600; margin-bottom: 4px; text-shadow: 0 1px 1px rgba(0,0,0,0.05);"></h5>
+													<p id="userEmail" style="margin: 0; color: #666; font-size: 13px; padding: 3px 10px; background: rgba(0,0,0,0.04); border-radius: 12px; display: inline-block;"></p>
+												</div>
+												<div class="profile-actions" style="margin-top: 15px;">
+													<button id="editProfileBtn" class="edit-profile-btn" style="background: #F28123; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-size: 14px; transition: all 0.3s ease;">
+														<i class="fas fa-edit"></i> प्रोफाइल सम्पादन
+													</button>
+												</div>
+											</div>
+											<a href="login.html" id="loginLink" style="color: #051922; padding: 14px 20px; display: flex; align-items: center; text-decoration: none; border-radius: 12px; transition: all 0.3s ease; margin: 8px 0; font-weight: 500; background: #f8f9fa; box-sizing: border-box; width: 100%;">
+												<i class="fas fa-sign-in-alt" style="margin-right: 12px; font-size: 18px; text-align: center; color: #F28123; transition: all 0.3s ease; flex-shrink: 0;"></i> लग इन
+											</a>
+											<a href="register.html" id="registerLink" style="color: #051922; padding: 14px 20px; display: flex; align-items: center; text-decoration: none; border-radius: 12px; transition: all 0.3s ease; margin: 8px 0; font-weight: 500; background: #f8f9fa; box-sizing: border-box; width: 100%;">
+												<i class="fas fa-user-plus" style="margin-right: 12px; font-size: 18px; text-align: center; color: #F28123; transition: all 0.3s ease; flex-shrink: 0;"></i> दर्ता गर्नुहोस्
+											</a>
+											<a href="#" id="updateProfileLink" style="color: #051922; padding: 14px 20px; display: none; align-items: center; text-decoration: none; border-radius: 12px; transition: all 0.3s ease; margin: 8px 0; font-weight: 500; background: #f8f9fa; box-sizing: border-box; width: 100%;">
+												<i class="fas fa-user-edit" style="margin-right: 12px; font-size: 18px; text-align: center; color: #F28123; transition: all 0.3s ease; flex-shrink: 0;"></i> प्रोफाइल अपडेट
+											</a>
+											<a href="#" id="logoutLink" style="color: #051922; padding: 14px 20px; display: none; align-items: center; text-decoration: none; border-radius: 12px; transition: all 0.3s ease; margin: 8px 0; font-weight: 500; background: #f8f9fa; box-sizing: border-box; width: 100%;">
+												<i class="fas fa-sign-out-alt" style="margin-right: 12px; font-size: 18px; text-align: center; color: #F28123; transition: all 0.3s ease; flex-shrink: 0;"></i> लग आउट
+											</a>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</nav>
+						<a class="mobile-show user-icon" href="#" style="color: #fff; display: none; position: absolute; right: 60px; top: 22px; z-index: 999;"><i class="fas fa-user"></i></a>
+						<div class="mobile-menu"></div>
+						<!-- menu end -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end header -->
+	
+	<!-- search area -->
+	<div class="search-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<span class="close-btn"><i class="fas fa-window-close"></i></span>
+					<div class="search-bar">
+						<div class="search-bar-tablecell">
+							<h3>Search For:</h3>
+							<input type="text" placeholder="Keywords">
+							<button type="submit">Search <i class="fas fa-search"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end search area -->
+
+	<!-- hero area -->
+	<div class="hero-area hero-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-9 offset-lg-2 text-center">
+					<div class="hero-text">
+						<div class="hero-text-tablecell">
+							<h2 class="subtitle">स्वागत छ ।</h2>
+							<h4>उच्च गुणस्तरीय र भरपर्दो खाद्य सामग्री सेवा सुविधाको लागि आफ्नो उत्पादनहरू योजना गर्ने उद्योगी पवन गल्ला पसल मा धन्यवाद ।</h4>
+							<div class="hero-btns">
+								<a href="shop.html" class="boxed-btn">सामानहरू खोज्नुहोस्</a>
+								<a href="contact.html" class="bordered-btn">सम्पर्क </a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end hero area -->
+
+	
+
+	<!-- product section -->
+	<div class="product-section mt-150 mb-150">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="section-title">	
+						<h3><span class="orange-text">हाम्रा </span> उत्पादनहरू</h3>
+						<p> हामी कहाँ चामल, दाल, चिनी, मैदा, नुन, तेल, सूजी, आटा पाउनुका साथै आलु, अदुवा, मकै, टिमुर खरिद गरिन्छ ।.</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-4 col-md-6 text-center">
+					<div class="single-product-item">
+						<div class="product-image">
+							<a href=""><img src="assets/img/products/tirupati.jpg" alt=""></a>
+						</div>
+						<h3>तिरुपति चामल</h3>
+						<p class="product-price"><span>प्रति केजी </span> रु. १५० </p>
+						<a href="cart.html" class=""><i class=""></i> </a>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 text-center">
+					<div class="single-product-item">
+						<div class="product-image">
+							<a href=""><img src="assets/img/products/oil.jpg" alt=""></a>
+						</div>
+						<h3>सनफ्लावर तेल</h3>
+						<p class="product-price"><span>प्रति लिटर</span> रु. २५०</p>
+						<a href="cart.html" class=""><i class=""></i> </a>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 text-center">
+					<div class="single-product-item">
+						<div class="product-image">
+							<a href=""><img src="assets/img/products/bheli.jpg" alt=""></a>
+						</div>
+						<h3>भेली </h3>
+						<p class="product-price"><span>प्रति केजी</span> रु. १००</p>
+						<a href="cart.html" class=""><i class=""></i> </a>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 text-center">
+					<div class="single-product-item">
+						<div class="product-image">
+							<a href=""><img src="assets/img/products/maida.jpg" alt=""></a>
+						</div>
+						<h3>मैदा</h3>
+						<p class="product-price"><span>प्रति केजी</span> रु. ७५</p>
+						<a href="cart.html" class=""><i class=""></i> </a>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 text-center">
+					<div class="single-product-item">
+						<div class="product-image">
+							<a href=""><img src="assets/img/products/kalo simi.jpg" alt=""></a>
+						</div>
+						<h3>कालो सिमि</h3>
+						<p class="product-price"><span>प्रति केजी</span> रु. १६०</p>
+						<a href="cart.html" class=""><i class=""></i> </a>
+					</div>
+				</div>
+					<div class="col-lg-4 col-md-6 text-center">
+					<div class="single-product-item">
+						<div class="product-image">
+							<a href=""><img src="assets/img/products/ashiyana.png" alt=""></a>
+						</div>
+						<h3>आसियाना बसमती</h3>
+						<p class="product-price"><span>प्रति बोरा </span> रु. ३२००</p>
+						<a href="cart.html" class=""><i class=""></i> </a>
+					</div>
+				</div> 
+					<div class="col-lg-4 col-md-6 text-center">
+					<div class="single-product-item">
+						<div class="product-image">
+							<a href=""><img src="assets/img/products/chana.png" alt=""></a>
+						</div>
+						<h3>चना</h3>
+						<p class="product-price"><span>प्रति केजी</span> रु. १६०</p>
+						<a href="cart.html" class=""><i class=""></i> </a>
+					</div>
+				</div>
+					<div class="col-lg-4 col-md-6 text-center">
+					<div class="single-product-item">
+						<div class="product-image">
+							<a href=""><img src="assets/img/products/oil10.png" alt=""></a>
+						</div>
+						<h3>तोरिको तेल</h3>
+						<p class="product-price"><span>१० लिटर</span> रु. २५००</p>
+						<a href="cart.html" class=""><i class=""></i> </a>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0 text-center">
+					<div class="single-product-item">
+						<div class="product-image">
+							<a href=""><img src="assets/img/products/masuro.jpg" alt=""></a>
+						</div>
+						<h3>मसुरो दाल</h3>
+						<p class="product-price"><span>प्रति केजी </span> रु. १६०</p>
+						<a href="" class=""><i class=""></i> </a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end product section -->
+
+	<!-- cart banner section -->
+	<section class="cart-banner pt-100 pb-100">
+    	<div class="container">
+        	<div class="row clearfix">
+            	<!--Image Column-->
+            	<div class="image-column col-lg-6">
+                	<div class="image">
+                    	<div class="price-box">
+                        	<div class="inner-price">
+                                <span class="price">
+                                    <strong>30%</strong> <br> off per kg
+                                </span>
+                            </div>
+                        </div>
+                    	<img src="assets/img/rice and dal.jpg" alt="">
+                    </div>
+                </div>
+                <!--Content Column-->
+                <div class="content-column col-lg-6">
+					<h3><span class="orange-text">यो </span> महिनाको अफर</h3>
+                    <h4>चामल र दाल</h4>
+                    <div class="text">कसैले नस्वीकार गर्ने, बारम्बार देखिने साना समस्याहरू, हामीलाई ठुला नोक्सानी दिने! तर, हामीले तपाईंका लागि विशेष अफर ल्याएका छौं ।
+           <p>गुणस्तरीय चामल र दालमा विशेष छुट!</p> 
+           गल्तीबाट उत्पन्न हुने सबै समस्याबाट बच्न सकिने, गुणस्तरीय र ताजा चामल-दाल अब सस्तो मूल्यमा पवन गल्ला पसलमा मात्र।</div>
+                    <!--Countdown Timer-->
+                    <div class="time-counter"><div class="time-countdown clearfix" data-countdown="2020/2/01"><div class="counter-column">
+						<div class="inner"><span class="count">00</span>Days</div></div> <div class="counter-column"><div class="inner"><span class="count">00</span>Hours</div></div>  <div class="counter-column"><div class="inner"><span class="count">00</span>Mins</div></div>  <div class="counter-column"><div class="inner"><span class="count">00</span>Secs</div></div></div></div>
+                	<a href="cart.html" class="cart-btn mt-3"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end cart banner section -->
+
+	<!-- testimonail-section -->
+	<div class="testimonail-section mt-150 mb-150">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-10 offset-lg-1 text-center">
+					<div class="testimonial-sliders">
+						<div class="single-testimonial-slider">
+							<div class="client-avater">
+								<img src="assets/img/Pa.jpg" alt="">
+							</div>
+							<div class="client-meta">
+								<h3> पवन ओली  <span>पसलको ग्राहक</span></h3>
+								<p class="testimonial-body">
+									"पवन गल्ला पसलमा सामानको गुणस्तर एकदम राम्रो छ। मूल्य पनि राम्रै लाग्छ। म हरेक हप्ता यतै किनमेल गर्छु।"
+								</p>
+								<div class="last-icon">
+									<i class="fas fa-quote-right"></i>
+								</div>
+							</div>
+						</div>
+						<div class="single-testimonial-slider">
+							<div class="client-avater">
+								<img src="assets/img/Bire.jpg" alt="">
+							</div>
+							<div class="client-meta">
+								<h3> वीरेन्द्र  ओली <span> पसलको ग्राहक</span></h3>
+
+								<p class="testimonial-body">
+									" सबै समस्याबाट बच्न सकिने, सस्तो मूल्यमा पवन गल्ला पसलमा मात्र।
+								</p>
+								<div class="last-icon">
+									<i class="fas fa-quote-right"></i>
+								</div>
+							</div>
+						</div>
+						<div class="single-testimonial-slider">
+							<div class="client-avater">
+								<img src="assets/img/bhim.jpg" alt="">
+							</div>
+							<div class="client-meta">
+								<h3> भीम प्रकाश ओली<span>पसलको ग्राहक</span></h3>
+								<p class="testimonial-body">
+									"पवन गल्ला पसलको व्यवहारले मन छोयो। ग्राहकलाई सम्मान दिने तरिका राम्रो लाग्यो।"
+								</p>
+								<div class="last-icon">
+									<i class="fas fa-quote-right"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end testimonail-section -->
+	
+	<!-- advertisement section -->
+	<div class="abt-section mb-150">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 col-md-12">
+				
+				</div>
+				<div class="col-lg-6 col-md-12">
+					<div class="abt-text">
+						<p class="top-sub">सन् २००१ देखि</p>
+						<h4>हामी छौं <span class="orange-text">पवन गल्ला पसलमा</span></h4>
+						<p>  पवन गल्ला पसलमा तपाईंको स्वागत छ!
+यहाँ सामान खरिद गर्न अब सजिलो, छरितो र भरपर्दो सेवा पाइन्छ।हामीले ग्राहकको सन्तुष्टिलाई प्राथमिकता दिएका छौं।</p>
+	<p>हामीले ग्राहकलाई सहज किनमेल अनुभव दिलाउन धेरै कुरा सरल बनाएका छौं ।
+व्यवस्थित सामानको सजिलो पहुँच, सस्तो मूल्यमा गुणस्तरीय चामल, दाल लगायत अन्य सामग्री,र मैत्री व्यवहारसहित छिटो सेवा। पवन गल्ला पसल तपाईंको घर नजिकैको भरपर्दो पसल हो ।।
+जहाँ सेवा मात्र हैन, सन्तुष्टि पनि पाइन्छ।
+
+</p>
+						<a href="about.html" class="boxed-btn mt-4">थप जान्नुहोस्</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end advertisement section -->
+	
+	<!-- shop banner -->
+	<section class="shop-banner">
+    	<div class="container">
+        	<h3>डिसेम्बरको बिक्री सुरु भयो! <br>  <span class="orange-text">छुट....</span></h3>
+            <div class="sale-percent"><span>बिक्री! <br> 
+ </span>५०%<span>सम्म छुट</span></div>
+            <a href="shop.html" class="cart-btn btn-lg">Shop Now</a>
+        </div>
+    </section>
+	<!-- end shop banner -->
+
+	<!-- latest news -->
+	<div class="latest-news pt-150 pb-150">
+		<div class="container">
+
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="section-title">	
+						<h3><span class="orange-text">हाम्रो </span> समाचार</h3>
+						<p> हामीले ग्राहकलाई सहज किनमेल अनुभव दिलाउन धेरै कुरा सरल बनाएका छौं</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-4 col-md-6">
+					<div class="single-latest-news">
+						<a href=""><div class="latest-news-bg news-bg-1"></div></a>
+						<div class="news-text-box">
+							<h3><a href="">ताजा आलु अब पवन गल्ला पसलमा उपलब्ध!</a></h3>
+							<p class="blog-meta">
+								<span class="author"><i class="fas fa-user"></i> Admin</span>
+								<span class="date"><i class="fas fa-calendar"></i> 15 March, 2025</span>
+							</p>
+							<p class="excerpt"> पवन गल्ला पसलमा ताजा र सफा आलुको नयाँ स्टक आइपुगेको छ।
+सीधै किसानबाट ल्याइएको, गुणस्तरीय आलु अब सस्तो मूल्यमा तपाईंको नजिकैको पसलमा उपलब्ध छ।</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6">
+					<div class="single-latest-news">
+						<a href=""><div class="latest-news-bg news-bg-2"></div></a>
+						<div class="news-text-box">
+							<h3><a href="">ताजा अदुवा अब पवन गल्ला पसलमा!</a></h3>
+							<p class="blog-meta">
+								<span class="author"><i class="fas fa-user"></i> Admin</span>
+								<span class="date"><i class="fas fa-calendar"></i> 27 April, 2025</span>
+							</p>
+							<p class="excerpt"> पवन गल्ला पसलमा ताजा र घरेलु अदुवा उपलब्ध छ।
+भान्साको स्वाद बढाउने मात्र होइन, स्वास्थ्यका लागि फाइदाजनक हुने अदुवा अब हाम्रो पसलमा उचित मूल्यमा पाइन्छ।</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0">
+					<div class="single-latest-news">
+						<a href=""><div class="latest-news-bg news-bg-3"></div></a>
+						<div class="news-text-box">
+							<h3><a href=""> खुशबुदार टिमुर अब पवन गल्ला पसलमा!</a></h3>
+							<p class="blog-meta">
+								<span class="author"><i class="fas fa-user"></i> Admin</span>
+								<span class="date"><i class="fas fa-calendar"></i> 12 May, 2025</span>
+							</p>
+							<p class="excerpt"> पवन गल्ला पसलमा ताजा र गुणस्तरीय टिमुर उपलब्ध भएको छ।
+नेपाली परिकारमा अनौठो स्वाद र सुगन्ध थप्ने टिमुर स्वास्थ्यका लागि पनि लाभदायक हुन्छ।</p>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end latest news -->
+
+
+	<!-- footer -->
+	<div class="footer-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box about-widget">
+						<h2 class="widget-title">पवन गल्ला पसल</h2>
+						<p> पवन गल्ला पसल स्थानीय ग्राहकहरूको आवश्यकता पूरा गर्न स्थापना गरिएको एक भरपर्दो र गुणस्तरीय पसल हो।
+                             हामी गुणस्तरीय गल्ला सामग्री उचित मूल्यमा उपलब्ध गराउँदछौं।
+                            </p>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box get-in-touch">
+						<h2 class="widget-title">सम्पर्क जानकारी</h2>
+						<ul>
+							<li>बागचोर नगरपालिका १२ बाफुखोला,सल्यान </li>
+							<li>pabangallapasal@gmail.com</li>
+							<li>+977 9822921377</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box ">
+						<h2 class="widget-title"> द्रुत लिङ्कहरु</h2>
+						<ul>
+							<li><a href="index.html">गृहपृष्ठ</a></li>
+							<li><a href="about.html">हाम्रो बारेमा</a></li>
+							<li><a href="services.html">पृष्ठहरू</a></li>
+							<li><a href="news.html">समाचार</a></li>
+							<li><a href="contact.html">सम्पर्क</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box subscribe">
+						<h2 class="widget-title">सदस्यता लिनुहोस्</h2>
+						<p>नवीनतम अपडेटहरू प्राप्त गर्न हाम्रो मेलिङ सूचीको सदस्यता लिनुहोस्।</p>
+						<form action="index.html">
+							<input type="email" placeholder="Email">
+							<button type="submit"><i class="fas fa-paper-plane"></i></button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end footer -->
+	
+	<!-- copyright -->
+	<div class="copyright">
+		<div class="container">
+			<div class="row">
+				<center></center><div class="col-lg-6 col-md-12">
+					<p> &copy; 2025  <a href="https://pabanoli.com.np">पवन गल्ला पसल</a>,  All Rights Reserved. 
+						Distributed By  <a href="https://pabanoli.com.np/">PaBaN</a>
+					</p>
+				</div></center>
+				<div class="col-lg-6 text-right col-md-12">
+					<div class="social-icons">
+						<ul>
+							<li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+							<li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
+							<li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+							<li><a href="#" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+							<li><a href="#" target="_blank"><i class="fab fa-dribbble"></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end copyright -->
+	
+	<!-- jquery -->
+	<script src="assets/js/jquery-1.11.3.min.js"></script>
+	<!-- bootstrap -->
+	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+	<!-- count down -->
+	<script src="assets/js/jquery.countdown.js"></script>
+	<!-- isotope -->
+	<script src="assets/js/jquery.isotope-3.0.6.min.js"></script>
+	<!-- waypoints -->
+	<script src="assets/js/waypoints.js"></script>
+	<!-- owl carousel -->
+	<script src="assets/js/owl.carousel.min.js"></script>
+	<!-- magnific popup -->
+	<script src="assets/js/jquery.magnific-popup.min.js"></script>
+	<!-- mean menu -->
+	<script src="assets/js/jquery.meanmenu.min.js"></script>
+	<!-- sticker js -->
+	<script src="assets/js/sticker.js"></script>
+	<!-- main js -->
+	<script src="assets/js/main.js"></script>
+
+	<style>
+		/* User Profile Styles */
+		.header-icons {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			position: relative;
+		}
+
+		.header-icons a {
+			color: #fff;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			transition: all 0.3s ease;
+			position: relative;
+			vertical-align: middle;
+		}
+
+		.header-icons a:hover {
+			background-color: rgba(255, 255, 255, 0.1);
+			transform: translateY(-2px);
+		}
+
+		.user-icon {
+			position: relative;
+			cursor: pointer;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			vertical-align: middle;
+			margin-top: -2px;
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			overflow: hidden;
+		}
+
+		.user-icon img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			border-radius: 50%;
+		}
+
+		.search-bar-icon i,
+		.shopping-cart i {
+			margin-top: -2px;
+		}
+
+		#userProfilePic {
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+			object-fit: cover;
+			border: 2px solid #fff;
+			box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+			transition: all 0.3s ease;
+			aspect-ratio: 1/1;
+			object-position: center;
+			vertical-align: middle;
+			overflow: hidden;
+			display: block;
+			margin: 0;
+			padding: 0;
+		}
+
+		#dropdownProfilePic {
+			width: 90px;
+			height: 90px;
+			border-radius: 50%;
+			object-fit: cover;
+			border: 3px solid #F28123;
+			padding: 3px;
+			margin-bottom: 15px;
+			box-shadow: 0 4px 12px rgba(242, 129, 35, 0.2);
+			aspect-ratio: 1/1;
+			object-position: center;
+			background-color: #fff;
+			overflow: hidden;
+			display: block;
+			margin: 0 auto 15px auto;
+		}
+
+		#userIcon {
+			font-size: 20px;
+			color: #fff;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 100%;
+			height: 100%;
+		}
+
+		#userProfilePic:hover {
+			transform: scale(1.1);
+			border-color: #F28123;
+		}
+
+		.user-dropdown {
+			position: absolute;
+			top: 100%;
+			right: 0;
+			background-color: #fff;
+			min-width: 280px;
+			box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+			border-radius: 16px;
+			padding: 20px;
+			margin-top: 15px;
+			display: none;
+			z-index: 1000;
+			animation: slideDown 0.3s ease;
+			border: 1px solid rgba(0,0,0,0.08);
+			overflow-y: auto;
+			max-height: calc(100vh - 100px);
+		}
+
+		@keyframes slideDown {
+			from {
+				opacity: 0;
+				transform: translateY(-10px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		#userInfo {
+			text-align: center;
+			padding: 15px;
+			border-bottom: 1px solid rgba(0,0,0,0.08);
+			margin-bottom: 15px;
+			background: linear-gradient(to bottom, #f8f9fa, #fff);
+			border-radius: 12px;
+		}
+
+		#userName {
+			color: #051922;
+			font-size: 20px;
+			font-weight: 600;
+			margin: 10px 0 5px;
+			text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+		}
+
+		#userEmail {
+			color: #666;
+			font-size: 14px;
+			margin: 0;
+			padding: 5px 15px;
+			background: rgba(0,0,0,0.03);
+			border-radius: 20px;
+			display: inline-block;
+		}
+
+		.user-dropdown a {
+			display: flex;
+			align-items: center;
+			padding: 14px 20px;
+			color: #051922;
+			text-decoration: none;
+			border-radius: 12px;
+			transition: all 0.3s ease;
+			margin: 8px 0;
+			font-weight: 500;
+			background: #f8f9fa;
+		}
+
+		.user-dropdown a i {
+			margin-right: 12px;
+			font-size: 18px;
+			width: 24px;
+			text-align: center;
+			color: #F28123;
+			transition: all 0.3s ease;
+		}
+
+		.user-dropdown a:hover {
+			background-color: #F28123;
+			color: #fff;
+			transform: translateX(5px);
+		}
+
+		.user-dropdown a:hover i {
+			color: #fff;
+		}
+
+		/* Mobile Responsive Styles */
+		@media only screen and (max-width: 767px) {
+			.user-dropdown {
+				position: fixed;
+				top: auto;
+				right: 0;
+				left: 0;
+				bottom: 0;
+				width: 100%;
+				border-radius: 24px 24px 0 0;
+				margin: 0;
+				padding: 25px;
+				animation: slideUp 0.3s ease;
+			}
+
+			@keyframes slideUp {
+				from {
+					transform: translateY(100%);
+				}
+				to {
+					transform: translateY(0);
+				}
+			}
+
+			#userInfo {
+				padding: 15px;
+			}
+
+			#dropdownProfilePic {
+				width: 70px;
+				height: 70px;
+			}
+
+			.user-dropdown a {
+				padding: 16px 20px;
+				font-size: 16px;
+			}
+		}
+
+		/* Profile Update Modal Styles */
+		.profile-update-modal {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0,0,0,0.5);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			z-index: 9999;
+		}
+
+		.modal-content {
+			background-color: #fff;
+			padding: 30px;
+			border-radius: 15px;
+			width: 90%;
+			max-width: 500px;
+			position: relative;
+			box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+		}
+
+		.close-modal {
+			position: absolute;
+			right: 20px;
+			top: 15px;
+			font-size: 24px;
+			cursor: pointer;
+			color: #666;
+			transition: color 0.3s;
+		}
+
+		.close-modal:hover {
+			color: #F28123;
+		}
+
+		.modal-content h2 {
+			color: #051922;
+			margin-bottom: 20px;
+			text-align: center;
+		}
+
+		.form-group {
+			margin-bottom: 20px;
+		}
+
+		.form-group label {
+			display: block;
+			margin-bottom: 8px;
+			color: #051922;
+			font-weight: 500;
+		}
+
+		.form-group input {
+			width: 100%;
+			padding: 12px;
+			border: 1px solid #ddd;
+			border-radius: 8px;
+			font-size: 14px;
+			transition: border-color 0.3s;
+		}
+
+		.form-group input:focus {
+			border-color: #F28123;
+			outline: none;
+		}
+
+		.update-btn {
+			background-color: #F28123;
+			color: #fff;
+			padding: 12px 25px;
+			border: none;
+			border-radius: 8px;
+			cursor: pointer;
+			width: 100%;
+			font-size: 16px;
+			transition: background-color 0.3s;
+		}
+
+		.update-btn:hover {
+			background-color: #051922;
+		}
+
+		@media only screen and (max-width: 767px) {
+			.modal-content {
+				width: 95%;
+				padding: 20px;
+			}
+		}
+
+		/* Add these new styles */
+		.profile-actions {
+			display: flex;
+			justify-content: center;
+			gap: 10px;
+			margin-top: 15px;
+		}
+
+		.edit-profile-btn {
+			background: #F28123;
+			color: white;
+			border: none;
+			padding: 8px 15px;
+			border-radius: 8px;
+			cursor: pointer;
+			font-size: 14px;
+			transition: all 0.3s ease;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+
+		.edit-profile-btn:hover {
+			background: #051922;
+			transform: translateY(-2px);
+		}
+
+		.edit-profile-btn i {
+			font-size: 16px;
+		}
+	</style>
+
+</body>
+</html>
